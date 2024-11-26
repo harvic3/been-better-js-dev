@@ -29,13 +29,13 @@ Código base para Callback
 // Base code to fetch data with callback style. It's only for demonstration
 function fetchApi(url, callback) {
   // Imaging fetching data from an API
-  fetch(url)
+  return fetch(url)
   .then((response) => {
     response.text().then((data) => {
-      callback(data);
+      return callback(data);
     })
   }).catch((error) => {
-    callback(error);
+    return callback(error);
   });
 }
 ```
@@ -75,11 +75,11 @@ function fetchDataThree(callback) {
 
 function myCallbackHell(message) {
   console.log(message);
-  fetchDataOne(function(dataOne) {
+  return fetchDataOne(function(dataOne) {
     console.log(dataOne);
-    fetchDataTwo(function(dataTwo) {
+    return fetchDataTwo(function(dataTwo) {
       console.log(dataTwo);
-      fetchDataThree(function(dataThree) {
+      return fetchDataThree(function(dataThree) {
         console.log(dataThree);
         // Imagine more nested callbacks with many lines between them
       });
@@ -108,10 +108,10 @@ function fetchApi(url) {
     fetch(url)
     .then((response) => {
       response.text().then((data) => {
-        resolve(data);
+        return resolve(data);
       })
     }).catch((error) => {
-      reject(error);
+      return reject(error);
     });
   });
 }
@@ -169,7 +169,7 @@ asíncrono de una manera mucho más fácil y legible.
 //         });
 //       } else {
 //         response.text().then((data) => {
-//           reject(data);
+//           return reject(data);
 //         });
 //       }
 //     }).catch((error) => {
@@ -220,7 +220,7 @@ fetchData();
 
 ## Adaptando el pasado al presente.
 > Existen librerías y paquetes que aún usan Callbacks, pero podemos adaptarlos a Promesas o Async/Await para mejorar 
-su legibilidad y mantenimiento, y una herramienta que nos permite hacer esto es `util.promisify` de Node.js.
+su legibilidad y mantenimiento, y una herramienta que nos permite hacer esto es `util.promisify` de **NodeJS**.
 
 ```js
 // Callback
@@ -249,7 +249,7 @@ fetchApiPromisified("http://localhost:8080/api?word=hello")
 ```
 
 ## Vamos al concepto
-Una promesa es un objeto que representa el resultado de una operación asíncrona y que puede estar en uno de los 
+Una promesa es un objeto que representa el resultado de una operación asíncrona que puede estar en uno de los 
 siguientes estados: `pendiente, resuelto o rechazado` (pending, resolved, rejected), y que requiere un correcto 
 manejo del resultado de acuerdo a su estado final.
 
@@ -393,7 +393,7 @@ function myNicePromise() {
         for (let i = 0; i < 1e9; i++) {
             result += i;
         }
-        resolve(result);
+        return resolve(result);
     });
 }
 
